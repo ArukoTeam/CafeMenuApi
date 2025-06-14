@@ -1,21 +1,29 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import helmet from 'helmet';
+import morgan from 'morgan';
+import path from 'path';
 
 const app = express();
 
-// Middleware
-app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+app.use(cors({
+    origin: process.env.CLIENT_ORIGIN || '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
+
+app.use(helmet());
+app.use(morgan('combined'));
 app.use(express.json());
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cafe-menu';
+// Routes
+app.use('/api/menu-items', menuItemRouter);
 
-mongoose.connect(MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+// Global error handler middleware
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+});
 
 export default app;
