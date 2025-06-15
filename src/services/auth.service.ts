@@ -1,8 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
+import { User } from '../models/user.model';
+import * as jwt from 'jsonwebtoken'
 
 const otpStore = new Map<string, { code: string, expiresAt: number }>();
 
 export class AuthService {
+    private static JWT_SECRET = process.env.JWT_SECRET!;
     static async sendOtp(phone: string) {
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         otpStore.set(phone, { code, expiresAt: Date.now() + 120000 }); // 2 دقیقه اعتبار
@@ -29,10 +31,10 @@ export class AuthService {
     }
 
     static generateToken(user: any) {
-        return jwt.sign({ id: user._id, phone: user.phone, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
+        return jwt.sign({ id: user._id, phone: user.phone, role: user.role }, AuthService.JWT_SECRET, { expiresIn: '1d' });
     }
 
     static verifyToken(token: string) {
-        return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token, AuthService.JWT_SECRET);
     }
 }

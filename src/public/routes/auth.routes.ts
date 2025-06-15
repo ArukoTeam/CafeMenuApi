@@ -1,9 +1,12 @@
 import express from 'express';
 import { AuthController } from '../../controllers/auth.controller';
 
-const router = express.Router();
 
-router.post('/send-otp', AuthController.sendOtp);
-router.post('/verify-otp', AuthController.verifyOtp);
+const authRouter = express.Router();
 
-export default router;
+authRouter.post('/send-otp', async (req, res) => await AuthController.sendOtp(req, res));
+authRouter.post('/verify-otp', async (req, res) => {
+    await AuthController.verifyOtp(req, res);
+});
+
+export default authRouter;

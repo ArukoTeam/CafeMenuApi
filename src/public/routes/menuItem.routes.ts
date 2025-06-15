@@ -1,11 +1,12 @@
 import express from 'express';
 import { MenuItemController } from '../../controllers/menuItem.controller';
 import validate from '../../middlewares/validate.middleware';
-import { createMenuItemSchema } from '../validations/menuItem.schema';
 
-const router = express.Router();
+const menuItemRouter  = express.Router();
 
-router.get('/', MenuItemController.getAll);
-router.get('/:id', MenuItemController.getOne);
+menuItemRouter .get('/', MenuItemController.getAll);
+menuItemRouter .get('/:id', async (req, res) => {
+    await MenuItemController.getOne(req, res);
+});
 
-export default router;
+export default menuItemRouter ;
