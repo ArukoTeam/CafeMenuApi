@@ -7,8 +7,6 @@ import path from 'path';
 import menuItemRouter from './public/routes/menuItem.routes';
 import authRouter from './public/routes/auth.routes';
 
-
-
 const app = express();
 
 app.use(express.json());

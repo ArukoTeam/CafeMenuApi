@@ -1,6 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
-
-export type UserRole = 'admin' | 'waiter' | 'customer';
+import { UserRole } from '../enums/role.enum';
 
 export interface IUser extends Document {
     phone: string;
@@ -8,10 +7,17 @@ export interface IUser extends Document {
     name?: string;
 }
 
-const userSchema = new Schema<IUser>({
-    phone: { type: String, required: true, unique: true },
-    role: { type: String, enum: ['admin', 'waiter', 'customer'], default: 'customer' },
-    name: { type: String }
-}, { timestamps: true });
+const userSchema = new Schema<IUser>(
+    {
+        phone: { type: String, required: true, unique: true },
+        role: {
+            type: String,
+            enum: Object.values(UserRole),
+            default: UserRole.CUSTOMER,
+        },
+        name: { type: String },
+    },
+    { timestamps: true }
+);
 
 export const User = model<IUser>('User', userSchema);

@@ -11,15 +11,16 @@ export interface IMenuItem extends Document {
     updatedAt: Date;
 }
 
-const menuItemSchema = new Schema<IMenuItem>({
-    name: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true },
-    price: { type: Number, required: true, min: 0 },
-    category: { type: String, required: true, trim: true },
-    ingredients: { type: [String], default: [] },
-    isAvailable: { type: Boolean, default: true },
-}, {
-    timestamps: true
-});
+const menuItemSchema = new Schema<IMenuItem>(
+    {
+        name: { type: String, required: true, trim: true },
+        description: { type: String, required: true, trim: true },
+        price: { type: Number, required: true, min: 0 },
+        category: { type: String, required: true, trim: true },
+        ingredients: { type: [String], default: [] },
+        isAvailable: { type: Boolean, default: true },
+    },
+    { timestamps: true }
+);
 
 export const MenuItem = model<IMenuItem>('MenuItem', menuItemSchema);
