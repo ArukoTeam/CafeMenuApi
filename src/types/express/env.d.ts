@@ -4,6 +4,7 @@ declare namespace NodeJS {
       PORT?: string;
       MONGODB_URI?: string;
       JWT_SECRET?: string;
+      REFRESH_SECRET?: string
     }
   }
   

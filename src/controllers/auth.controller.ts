@@ -18,7 +18,7 @@ export class AuthController {
             return res.status(400).json({ message: 'Phone and code are required' });
           }
     
-          const user = await AuthService.verifyOtp(phone, code);
+          const user = await AuthService.verifyOtp(phone, code , res);
     
           if (!user) {
             return res.status(401).json({ message: 'Invalid or expired OTP' });

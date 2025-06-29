@@ -1,8 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export type UserRole = 'admin' | 'waiter' | 'customer';
 
 export interface IUser extends Document {
+    _id: Types.ObjectId;
     phone: string;
     role: UserRole;
     name?: string;
