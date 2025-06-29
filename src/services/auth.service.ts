@@ -36,6 +36,7 @@ export class AuthService {
 
         return { id: user._id, phone: user.phone, role: user.role };
     }
+    
 
     static generateToken(user: any) {
         return jwt.sign(
