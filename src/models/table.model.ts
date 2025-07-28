@@ -1,19 +1,3 @@
-import { Schema, model, Document } from 'mongoose';
-
-export interface ITable extends Document {
-    number: number;
-    capacity: number;
-    location: string; // مثلا سالن، تراس و ...
-    isAvailable: boolean;
-}
-const tableSchema = new Schema<ITable>({
-    number: { type: Number, required: true, unique: true },
-    capacity: { type: Number, required: true },
-    location: { type: String, required: true },
-    isAvailable: { type: Boolean, default: true }
-}, { timestamps: true });
-
-export const Table = model<ITable>('Table', tableSchema);
 
 import { Schema, model, Document, Types } from 'mongoose';
 

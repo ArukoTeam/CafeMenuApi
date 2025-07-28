@@ -2,7 +2,7 @@
   "compilerOptions": {
     "typeRoots": [
       "./node_modules/@types",
-      "./index.d.ts"
+      "./src/types"
     ],
     "target": "ES6",
     "module": "commonjs",

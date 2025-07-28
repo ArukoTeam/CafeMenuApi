@@ -4,7 +4,8 @@ import { makeResponse } from '../utils/response';
 
 export const requireRole = (...roles: UserRole[]) => {
     return (req: Request, res: Response, next: NextFunction): void => {
-        const userRole = req.user?.role;
+        const userRole = (req.user as { role?: UserRole })?.role;
+
 
         if (!userRole || !roles.includes(userRole)) {
             res

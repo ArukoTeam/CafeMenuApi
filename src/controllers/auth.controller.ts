@@ -41,4 +41,28 @@ export class AuthController {
           return res.status(500).json({ message: 'Internal server error' });
         }
       }
+
+
+      static async refreshAccessToken(req: Request, res: Response) {
+        try {
+          const refreshToken = req.cookies?.refresh_token || req.body?.refreshToken;
+    
+          if (!refreshToken) {
+            return res.status(400).json({ message: 'Refresh token is required' });
+          }
+    
+          const result = await AuthService.refreshAccessToken(refreshToken, res);
+    
+          if (!result.success) {
+            return res.status(401).json({ message: result.error });
+          }
+    
+          return res.status(200).json({ message: 'Access token refreshed successfully' });
+        } catch (error) {
+          console.error('Error in refreshAccessToken:', error);
+          return res.status(500).json({ message: 'Internal server error' });
+        }
+      }
+
+
 }
